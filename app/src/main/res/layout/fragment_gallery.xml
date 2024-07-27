@@ -1,22 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.gallery.GalleryFragment">
+    android:padding="16dp">
 
-    <TextView
-        android:id="@+id/text_gallery"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <Button
+        android:id="@+id/buttonW"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:text="W"
+        android:textSize="24sp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/button_selector"
+        android:layout_above="@id/buttonS" />
+
+    <Button
+        android:id="@+id/buttonA"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:text="A"
+        android:textSize="24sp"
+        android:layout_toLeftOf="@id/buttonS"
+        android:background="@drawable/button_selector"
+        android:layout_alignTop="@id/buttonS" />
+
+    <Button
+        android:id="@+id/buttonS"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:text="S"
+        android:textSize="24sp"
+        android:background="@drawable/button_selector"
+        android:layout_centerInParent="true" />
+
+    <Button
+        android:id="@+id/buttonD"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:text="D"
+        android:textSize="24sp"
+        android:layout_toRightOf="@id/buttonS"
+        android:background="@drawable/button_selector"
+        android:layout_alignTop="@id/buttonS" />
+
+</RelativeLayout>
