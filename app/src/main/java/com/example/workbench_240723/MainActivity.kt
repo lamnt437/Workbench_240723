@@ -1,5 +1,6 @@
 package com.example.workbench_240723
 
+import GoogleSheetsService
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -24,6 +25,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+    private lateinit var sheetsService: GoogleSheetsService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +40,22 @@ class MainActivity : AppCompatActivity() {
                 println("Internet connection failed")
             }
         }
+
+        val credentialsStream = resources.openRawResource(R.raw.gg_credentials)
+        sheetsService = GoogleSheetsService(credentialsStream)
+
+        // Use the service to update a cell
+        Thread {
+            try {
+                sheetsService.updateCell(
+                    "1Y8tjOSrSlB19KNUSckgrZZdfv4bwv63L2QjnkzAU1EY",
+                    "Sheet1!A1",
+                    "Hello, World!"
+                )
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }.start()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
