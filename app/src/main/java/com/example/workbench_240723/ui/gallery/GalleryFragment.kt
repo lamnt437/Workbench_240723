@@ -12,6 +12,7 @@ import com.example.workbench_240723.databinding.FragmentGalleryBinding
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import android.view.MotionEvent
 
 class GalleryFragment : Fragment() {
 
@@ -34,9 +35,27 @@ class GalleryFragment : Fragment() {
         _binding = FragmentGalleryBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textGallery
-        galleryViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+//        val buttonW = findViewById<Button>(R.id.buttonW)
+        val buttonW = binding.buttonW
+        val buttonA = binding.buttonA
+        val buttonD = binding.buttonD
+        val buttonS = binding.buttonS
+
+        val buttons = listOf(buttonW, buttonA, buttonS, buttonD)
+
+        buttons.forEach { button ->
+            button.setOnTouchListener { v, event ->
+                when (event.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        v.isPressed = true
+                        v.performClick()
+                    }
+                    MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                        v.isPressed = false
+                    }
+                }
+                true
+            }
         }
 
         GlobalScope.launch {
