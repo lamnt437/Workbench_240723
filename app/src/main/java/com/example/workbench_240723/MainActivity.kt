@@ -45,6 +45,7 @@ class MainActivity : AppCompatActivity() {
         sheetsService = GoogleSheetsService(credentialsStream)
 
         // Use the service to update a cell
+        // TODO get value from cell
         Thread {
             try {
                 sheetsService.updateCell(
@@ -52,6 +53,9 @@ class MainActivity : AppCompatActivity() {
                     "Sheet1!A1",
                     "Hello, World!"
                 )
+
+                var cellValue = sheetsService.getCell("1Y8tjOSrSlB19KNUSckgrZZdfv4bwv63L2QjnkzAU1EY", "Sheet1!D1")
+                Log.d("GoogleSheet getCell", cellValue)
             } catch (e: Exception) {
                 e.printStackTrace()
             }

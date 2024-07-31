@@ -30,4 +30,17 @@ class GoogleSheetsService(private val credentialsStream: InputStream) {
             .setValueInputOption("RAW")
             .execute()
     }
+
+    fun getCell(spreadsheetId: String, range: String): String {
+//        "Sheet1!D1",
+        var returnValue = "-1"
+        val response = sheetsService.spreadsheets().values()
+            .get(spreadsheetId, range)
+            .execute()
+        val values = response.getValues()
+        if (values != null && values.isNotEmpty() && values[0].isNotEmpty())
+            returnValue = values[0][0].toString()
+
+        return returnValue
+    }
 }
