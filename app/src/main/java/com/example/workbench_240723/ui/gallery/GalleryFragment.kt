@@ -40,6 +40,10 @@ class GalleryFragment : Fragment() {
         val buttonA = binding.buttonA
         val buttonD = binding.buttonD
         val buttonS = binding.buttonS
+        buttonW.setOnClickListener {
+            Log.d("Hello", "........")
+            buttonW.isPressed = true
+        }
 
         val buttons = listOf(buttonW, buttonA, buttonS, buttonD)
 

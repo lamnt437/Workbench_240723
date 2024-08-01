@@ -3,7 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:clickable = "true"
+    android:padding="16dp"
+    android:focusable="true">
 
     <EditText
         android:id="@+id/floorNumberInput"
@@ -23,7 +25,9 @@
         android:id="@+id/getConsumptionButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Get Consumption" />
+        android:clickable = "true"
+        android:text="Get Consumption"
+        android:focusable="true" />
 
     <TextView
         android:id="@+id/resultTextView"

@@ -1,6 +1,8 @@
 package com.example.workbench_240723
 
+import GoogleSheetsService
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import com.example.workbench_240723.databinding.FragmentGalleryBinding
 import com.example.workbench_240723.databinding.FragmentLookupBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -29,30 +32,20 @@ class LookupFragment : Fragment() {
     private lateinit var roomNumberInput: EditText
     private lateinit var getConsumptionButton: Button
     private lateinit var resultTextView: TextView
-    private lateinit var binding: FragmentLookupBinding
+    private lateinit var sheetsService: GoogleSheetsService
+
+    private var _binding: FragmentLookupBinding? = null
+
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("Hello", "Lookup")
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
-        }
-        binding = FragmentLookupBinding.inflate(layoutInflater)
-
-        floorNumberInput = binding.floorNumberInput
-        roomNumberInput = binding.roomNumberInput
-        getConsumptionButton = binding.getConsumptionButton
-        resultTextView = binding.resultTextView
-
-        getConsumptionButton.setOnClickListener {
-            val floorNumber = floorNumberInput.text.toString().toIntOrNull()
-            val roomNumber = roomNumberInput.text.toString().toIntOrNull()
-
-            if (floorNumber != null && roomNumber != null) {
-                getElectricityConsumption(floorNumber, roomNumber)
-            } else {
-                resultTextView.text = "Please enter valid floor and room numbers"
-            }
         }
     }
 
@@ -60,8 +53,40 @@ class LookupFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_lookup, container, false)
+        _binding = FragmentLookupBinding.inflate(inflater, container, false)
+        val root: View = binding.root
+
+        floorNumberInput = binding.floorNumberInput
+        roomNumberInput = binding.roomNumberInput
+        resultTextView = binding.resultTextView
+        getConsumptionButton = binding.getConsumptionButton
+
+        getConsumptionButton.setOnClickListener {
+            Log.d("Lookup Button", "getConsumption")
+            val floorNumber = floorNumberInput.text.toString().toIntOrNull()
+            val roomNumber = roomNumberInput.text.toString().toIntOrNull()
+            Log.d("Lookup Button", "floorNumber $floorNumber")
+            Log.d("Lookup Button", "roomNumber $roomNumber")
+
+            if (floorNumber != null && roomNumber != null) {
+                Thread {
+                    try {
+                        getElectricityConsumption(floorNumber, roomNumber)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }.start()
+            } else {
+                resultTextView.text = "Please enter valid floor and room numbers"
+            }
+        }
+
+//        binding.getConsumptionButton.setOnClickListener {
+//            Log.d("MainActivity", "Button clicked")
+////            getConsumption()
+//        }
+        Log.d("Hello", "before")
+        return root
     }
 
     private fun getElectricityConsumption(floorNumber: Int, roomNumber: Int) {
@@ -73,8 +98,12 @@ class LookupFragment : Fragment() {
 
     private fun fetchConsumptionFromSheet(floorNumber: Int, roomNumber: Int): Double {
         // Placeholder function - replace with actual API call
+        val credentialsStream = resources.openRawResource(R.raw.gg_credentials)
+        sheetsService = GoogleSheetsService(credentialsStream)
         // This is where you'll implement the Google Sheets API logic
-        return 0.0
+        var cellValue = sheetsService.getCell("1Y8tjOSrSlB19KNUSckgrZZdfv4bwv63L2QjnkzAU1EY", "Sheet1!D1")
+        Log.d("GoogleSheet getCell", cellValue)
+        return cellValue.toDouble()
     }
 
     companion object {
