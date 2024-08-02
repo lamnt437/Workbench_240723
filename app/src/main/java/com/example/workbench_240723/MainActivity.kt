@@ -48,11 +48,11 @@ class MainActivity : AppCompatActivity() {
         // TODO get value from cell
         Thread {
             try {
-                sheetsService.updateCell(
-                    "1Y8tjOSrSlB19KNUSckgrZZdfv4bwv63L2QjnkzAU1EY",
-                    "Sheet1!A1",
-                    "Hello, World!"
-                )
+//                sheetsService.updateCell(
+//                    "1Y8tjOSrSlB19KNUSckgrZZdfv4bwv63L2QjnkzAU1EY",
+//                    "Sheet1!A1",
+//                    "Hello, World!"
+//                )
 
                 var cellValue = sheetsService.getCell("1Y8tjOSrSlB19KNUSckgrZZdfv4bwv63L2QjnkzAU1EY", "Sheet1!D1")
                 Log.d("GoogleSheet getCell", cellValue)

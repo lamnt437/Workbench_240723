@@ -12,6 +12,7 @@ import android.widget.EditText
 import android.widget.TextView
 import com.example.workbench_240723.databinding.FragmentGalleryBinding
 import com.example.workbench_240723.databinding.FragmentLookupBinding
+import com.example.workbench_240723.googlesheets.RoomLocator
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -33,6 +34,7 @@ class LookupFragment : Fragment() {
     private lateinit var getConsumptionButton: Button
     private lateinit var resultTextView: TextView
     private lateinit var sheetsService: GoogleSheetsService
+    private lateinit var roomLocator: RoomLocator
 
     private var _binding: FragmentLookupBinding? = null
 
@@ -100,8 +102,23 @@ class LookupFragment : Fragment() {
         // Placeholder function - replace with actual API call
         val credentialsStream = resources.openRawResource(R.raw.gg_credentials)
         sheetsService = GoogleSheetsService(credentialsStream)
+        roomLocator = RoomLocator(
+            sheetsService,
+            "1Y8tjOSrSlB19KNUSckgrZZdfv4bwv63L2QjnkzAU1EY"
+        )
+
+        // TODO get D1, not hard code
+        val roomRow = roomLocator.findRoomRow(floorNumber, roomNumber)
+        if (roomRow == null) {
+            resultTextView.text = "Room P$roomNumber - T$floorNumber not found in Google Sheet"
+        }
+
+
         // This is where you'll implement the Google Sheets API logic
-        var cellValue = sheetsService.getCell("1Y8tjOSrSlB19KNUSckgrZZdfv4bwv63L2QjnkzAU1EY", "Sheet1!D1")
+        var cellValue = sheetsService.getCell(
+            "1Y8tjOSrSlB19KNUSckgrZZdfv4bwv63L2QjnkzAU1EY",
+            "Sheet1!D$roomRow"
+        )
         Log.d("GoogleSheet getCell", cellValue)
         return cellValue.toDouble()
     }
