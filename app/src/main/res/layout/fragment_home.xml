@@ -60,7 +60,7 @@
         android:layout_height="wrap_content"
         android:shadowDx="3"
         android:shadowDy="3"
-        android:text="Ghi số điện"
+        android:text="Ghi số điện tháng này"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
