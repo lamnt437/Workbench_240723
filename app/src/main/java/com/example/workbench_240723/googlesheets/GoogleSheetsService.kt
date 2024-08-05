@@ -12,7 +12,7 @@ import java.io.InputStream
 class GoogleSheetsService(private val credentialsStream: InputStream, spreadsheetId: String) {
 
     private var spreadsheetId: String? = null
-    private val sheetsService: Sheets by lazy {
+    public val sheetsService: Sheets by lazy {
         val credentials = GoogleCredentials.fromStream(credentialsStream)
             .createScoped(listOf(SheetsScopes.SPREADSHEETS))
 
@@ -23,6 +23,10 @@ class GoogleSheetsService(private val credentialsStream: InputStream, spreadshee
         )
             .setApplicationName("Your App Name")
             .build()
+    }
+
+    fun getSheetsService(): Any {
+        return this.sheetsService
     }
 
     fun updateCell(range: String, value: String) {
@@ -37,14 +41,15 @@ class GoogleSheetsService(private val credentialsStream: InputStream, spreadshee
     fun getCell(range: String): String {
 //        "Sheet1!D1",
         var returnValue = "-1"
-         val response = sheetsService.spreadsheets().values()
+        val response = sheetsService.spreadsheets().values()
             .get(this.spreadsheetId, range)
             .execute()
         val values = response.getValues()
-        if (values != null && values.isNotEmpty() && values[0].isNotEmpty())
-            returnValue = values[0][0].toString()
-
-        return returnValue
+        return values.toString()
+//        if (values != null && values.isNotEmpty() && values[0].isNotEmpty())
+//            returnValue = values[0][0].toString()
+//
+//        return returnValue
     }
 
     fun getRow(sheetName: String, rowNumber: Int): Any {
@@ -63,7 +68,7 @@ class GoogleSheetsService(private val credentialsStream: InputStream, spreadshee
 
     // DOING
     fun getRoomRowByMonth(floorNumber: Int, roomNumber: Int, selectedMonth: Int): Any {
-        val roomRowIdx = RoomService.getRoomRowIdx(floorNumber, roomNumber)
+//        val roomRowIdx = RoomService.getRoomRowIdx(floorNumber, roomNumber)
 //        val selectedMonthStr = String.format("%02d", selectedMonth)
 //        val sheetName = "$selectedMonthStr-2024"
 //        val rowData = this.getRow(sheetName, roomRowIdx)
@@ -76,7 +81,10 @@ class GoogleSheetsService(private val credentialsStream: InputStream, spreadshee
 ////        }
 //
 //        return rowData
-        return 1
+//        return 1
+        // TODO fix hard coded sheetName
+        val sheetName = "07-2024"
+        return this.getRow(sheetName, 6)
     }
 
     // TODO get the whole row

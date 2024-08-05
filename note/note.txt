@@ -1,0 +1,18 @@
+---240805 inside getConsumptionButton.setOnClickListener
+
+//                        getElectricityConsumption(floorNumber, roomNumber)  
+//                        var rowData = sheetsService.getRoomRowByMonth(floorNumber, roomNumber, selectedMonth)  
+////                        Toast.makeText(requireContext(), rowData.toString())  
+//                        var rowIdx = this.getRoomRowIdx(floorNumber, roomNumber)  
+//                        var rowData = sheetsService.getCell("07-2024!$rowIdx:$rowIdx")  
+//                        Toast.makeText(requireContext(), rowData.toString(), Toast.LENGTH_SHORT).show()  
+                        var sheetService = sheetsService.getSheetsService()  
+                        val response = sheetService.spreadsheets().values()  
+                            .get(this.spreadsheetId, range)  
+                            .execute()  
+                        val values = response.getValues()  
+                        if (values != null && values.isNotEmpty() && values[0].isNotEmpty())  
+                            returnValue = values[0][0].toString()  
+                        progressBar.visibility = View.GONE
+                        
+go to chatgpt thread for more details on this bug
