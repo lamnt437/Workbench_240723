@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         val credentialsStream = resources.openRawResource(R.raw.gg_credentials)
-        sheetsService = GoogleSheetsService(credentialsStream)
+        sheetsService = GoogleSheetsService(credentialsStream, "1hmlyiW7EAK6MFo1xYz3Hcfi8t41OCEqq-wNTpbyuvCo")
 
         // Use the service to update a cell
         // TODO get value from cell
@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
 //                    "Hello, World!"
 //                )
 
-                var cellValue = sheetsService.getCell("1Y8tjOSrSlB19KNUSckgrZZdfv4bwv63L2QjnkzAU1EY", "Sheet1!D1")
+                var cellValue = sheetsService.getCell("Sheet1!D1")
                 Log.d("GoogleSheet getCell", cellValue)
             } catch (e: Exception) {
                 e.printStackTrace()

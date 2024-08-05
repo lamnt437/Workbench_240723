@@ -10,7 +10,7 @@ class RoomLocator(private val googleSheetsService: GoogleSheetsService, private 
         var high = 9 // Adjust this to a reasonable maximum number of rooms
         var row = -1
         for (i in low..high) {
-            val currentRoom = googleSheetsService.getCell(spreadsheetId, "A$i")
+            val currentRoom = googleSheetsService.getCell("A$i")
             if (currentRoom == "P$roomNumber-T$floorNumber") {
                 row = i
                 break
@@ -24,7 +24,7 @@ class RoomLocator(private val googleSheetsService: GoogleSheetsService, private 
         val rowIndex = findRoomRow(floorNumber, roomNumber)
         return rowIndex?.let {
             // Assuming electricity consumption is in column D
-            googleSheetsService.getCell(spreadsheetId, "D$it")?.toDoubleOrNull()
+            googleSheetsService.getCell("D$it")?.toDoubleOrNull()
         }
     }
 }

@@ -65,12 +65,9 @@ class MonthlyRecordFragment : Fragment() {
         electricityIndexInput = binding.electricityIndexInput
 
         setConsumptionButton.setOnClickListener {
-            Log.d("Lookup Button", "getConsumption")
             val floorNumber = floorNumberInput.text.toString().toIntOrNull()
             val roomNumber = roomNumberInput.text.toString().toIntOrNull()
             val electricityIndex = electricityIndexInput.text.toString().toIntOrNull()
-            Log.d("Lookup Button", "floorNumber $floorNumber")
-            Log.d("Lookup Button", "roomNumber $roomNumber")
 
             if (floorNumber != null && roomNumber != null && electricityIndex != null) {
                 Thread {
@@ -103,7 +100,7 @@ class MonthlyRecordFragment : Fragment() {
 
     private fun setElectricityIndex(floorNumber: Int, roomNumber: Int, electricityIndex: Int) {
         val credentialsStream = resources.openRawResource(R.raw.gg_credentials)
-        sheetsService = GoogleSheetsService(credentialsStream)
+        sheetsService = GoogleSheetsService(credentialsStream, "1hmlyiW7EAK6MFo1xYz3Hcfi8t41OCEqq-wNTpbyuvCo")
         roomLocator = RoomLocator(
             sheetsService,
             "1Y8tjOSrSlB19KNUSckgrZZdfv4bwv63L2QjnkzAU1EY"
@@ -117,7 +114,6 @@ class MonthlyRecordFragment : Fragment() {
 
         // This is where you'll implement the Google Sheets API logic
         sheetsService.updateCell(
-            "1Y8tjOSrSlB19KNUSckgrZZdfv4bwv63L2QjnkzAU1EY",
             "Sheet1!D$roomRow",
             electricityIndex.toString()
         )
@@ -126,7 +122,7 @@ class MonthlyRecordFragment : Fragment() {
     private fun fetchConsumptionFromSheet(floorNumber: Int, roomNumber: Int): Double {
         // Placeholder function - replace with actual API call
         val credentialsStream = resources.openRawResource(R.raw.gg_credentials)
-        sheetsService = GoogleSheetsService(credentialsStream)
+        sheetsService = GoogleSheetsService(credentialsStream, "1hmlyiW7EAK6MFo1xYz3Hcfi8t41OCEqq-wNTpbyuvCo")
         roomLocator = RoomLocator(
             sheetsService,
             "1Y8tjOSrSlB19KNUSckgrZZdfv4bwv63L2QjnkzAU1EY"
@@ -140,9 +136,14 @@ class MonthlyRecordFragment : Fragment() {
 
         // This is where you'll implement the Google Sheets API logic
         var cellValue = sheetsService.getCell(
-            "1Y8tjOSrSlB19KNUSckgrZZdfv4bwv63L2QjnkzAU1EY",
             "Sheet1!D$roomRow"
         )
+
+        var rowValue = sheetsService.getCell(
+            "Sheet1!D$roomRow"
+        )
+
+        // TODO
         Log.d("GoogleSheet getCell", cellValue)
         return cellValue.toDouble()
     }

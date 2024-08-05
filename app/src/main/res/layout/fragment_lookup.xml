@@ -7,6 +7,11 @@
     android:padding="16dp"
     android:focusable="true">
 
+    <Spinner
+        android:id="@+id/month_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <EditText
         android:id="@+id/floorNumberInput"
         android:layout_width="match_parent"
@@ -28,6 +33,12 @@
         android:clickable = "true"
         android:text="Get Consumption"
         android:focusable="true" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/resultTextView"
