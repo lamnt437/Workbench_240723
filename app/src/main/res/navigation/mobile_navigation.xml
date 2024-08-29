@@ -48,4 +48,11 @@
         android:label="@string/menu_lookup"
         tools:layout="@layout/fragment_lookup"
         />
+
+    <fragment
+        android:id="@+id/nav_240829"
+        android:name="com.example.workbench_240723.Fragment240829"
+        android:label="@string/menu_240829"
+        tools:layout="@layout/fragment_240829"
+        />
 </navigation>
