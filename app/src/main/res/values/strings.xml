@@ -15,6 +15,7 @@
     <string name="menu_lookup">Lookup</string>
     <string name="menu_monthly_record">Ghi chỉ số hàng tháng</string>
     <string name="menu_240829">240829</string>
+    <string name="menu_240908">240908</string>
 
     <string-array name="months_array">
         <item>1</item>
