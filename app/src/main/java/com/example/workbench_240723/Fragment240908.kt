@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.workbench_240723.data.UnitPriceRepo
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -33,6 +34,8 @@ class Fragment240908 : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // TODO call UnitPriceRepo
+        UnitPriceRepo.setData("water", 4000)
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_240908, container, false)
     }
